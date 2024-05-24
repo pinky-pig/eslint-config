@@ -76,9 +76,9 @@ dependencies:
     version: 1.2.2
 
 devDependencies:
-  '@sxzz/prettier-config':
-    specifier: ^2.0.2
-    version: 2.0.2
+  '@arvinn/prettier-config':
+    specifier: ^0.0.1
+    version: 0.0.1
   '@types/node':
     specifier: ^20.12.7
     version: 20.12.12
@@ -103,6 +103,10 @@ packages:
   /@antfu/utils@0.7.8:
     resolution: {integrity: sha512-rWQkqXRESdjXtc+7NRfK9lASQjpXJu1ayp7qi1d23zZorY+wBHVLHHoVcMsEnkqEBWTFqbztO7/QdJFzyEcLTg==}
     dev: false
+
+  /@arvinn/prettier-config@0.0.1:
+    resolution: {integrity: sha512-Pz8QrqdZPDqgmmHi4d+g/w269+YMjCDEiar3QNDbgWOugUnYp2n5msWVcUXjpvUPGCd5Mbguwg/7HlzMR6I1RA==}
+    dev: true
 
   /@babel/code-frame@7.24.2:
     resolution: {integrity: sha512-y5+tLQyV8pg3fsiln67BVLD1P13Eg4lh5RW9mF0zUuvLrv9uIQ4MCL+CRT+FTsBlBjcIan6PGsLcBN0m3ClUyQ==}
@@ -820,10 +824,6 @@ packages:
     requiresBuild: true
     dev: true
     optional: true
-
-  /@sxzz/prettier-config@2.0.2:
-    resolution: {integrity: sha512-yBKxaIr6WqgHTaLgX0g6gxNuMllkwR1QGeXynfJGmyD+XrZqO96t9xT5Mfbr9H3+N56SXY9/yFvP/e8lcJI7KA==}
-    dev: true
 
   /@types/estree@1.0.5:
     resolution: {integrity: sha512-/kYRxGDLWzHOB7q+wtSUQlFrtcdUccpfy+X+9iMBpHK8QLLhx2wIPYuS5DYtR9Wa/YlZAbIovy7qVdB1Aq6Lyw==}
