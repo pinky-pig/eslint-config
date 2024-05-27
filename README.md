@@ -36,7 +36,7 @@ export default arvinn();
 }
 ```
 
-close project floder && reopen project
+**close project floder && reopen project**
 
 ```bash
 npx prettier 'src/**/*.ts' --write
@@ -85,8 +85,14 @@ export default arvinn(
         "sort-imports": "off",
       },
     },
+    {
+      ignores: [
+        "!node_modules/",           // unignore `node_modules/` directory
+        "node_modules/*",           // ignore its content
+        "!node_modules/mylibrary/"  // unignore `node_modules/mylibrary` directory
+      ]
+    }
   ],
-
   {
     vue: true,
     prettier: {
