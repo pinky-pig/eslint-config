@@ -40,7 +40,9 @@ close project floder && reopen project
 ```bash
 npx prettier 'src/**/*.ts' --write
 # or
-npx prettier 'src/**/*.{js,ts,mjs,cjs,json}' --write
+prettier --write \"**/*.{js,jsx,ts,tsx,css,md,json,html,vue,scss,sass,less}\"
+# or 
+prettier --write .
 ```
 
 # Other
