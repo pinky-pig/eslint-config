@@ -102,3 +102,19 @@ export default arvinn(
   },
 );
 ```
+
+if there have an error like this:
+```
+import { arvinn } from "@arvinn/eslint-config";
+^^^^^^
+
+SyntaxError: Cannot use import statement outside a module
+```
+
+just add `type: "module"` to `package.json`
+
+```json
+{
+  "type": "module"
+}
+```
