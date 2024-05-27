@@ -9,9 +9,10 @@ Forked from [@sxzz/eslint-config](https://github.com/sxzz/eslint-config)
 ```bash
 pnpm install -D eslint
 pnpm install -D @arvinn/eslint-config
-
 pnpm install -D prettier
 pnpm install -D @arvinn/prettier-config
+# or
+pnpm install -D eslint prettier @arvinn/eslint-config @arvinn/prettier-config
 ```
 
 ```bash
@@ -49,14 +50,33 @@ prettier --write .
 
 ```js
 // eslint.config.js
+// https://eslint.org/docs/latest/use/configure/migration-guide
 import { arvinn } from "@arvinn/eslint-config";
+import js from "@eslint/js";
+import myConfig from "eslint-config-my-config";
+import customConfig from "./custom-config.js";
 
 export default arvinn(
   [
+    js.configs.recommended,
+    customConfig,
+    myConfig,
     {
       files: ["src/**/*.ts"],
       rules: {
         "perfectionist/sort-objects": "error",
+      },
+    },
+    {
+      // 自定义
+      ...customTestConfig,
+      files: ["src/**/*.js"],
+      // 单种类型插件
+      plugins: {
+        jsdoc
+      },
+      rules: {
+        'import/no-default-export': 'off',
       },
     },
     {
