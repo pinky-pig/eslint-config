@@ -159,4 +159,11 @@ export default {
   },
 }
 ```
-  
+
+3. if there have an error like this:
+```
+ReferenceError: exports is not defined in ES module scope
+[1] This file is being treated as an ES module because it has a '.js' file extension and '/Users/wangwenbo/Documents/wangwenbo/Mine/electron-demo/package.json' contains "type": "module". To treat it as a CommonJS script, rename it to use the '.cjs' file extension.
+```
+
+just rename to `.cjs`
