@@ -109,7 +109,8 @@ export default arvinn(
 );
 ```
 
-if there have an error like this:
+# Error
+1. if there have an error like this:
 ```
 import { arvinn } from "@arvinn/eslint-config";
 ^^^^^^
@@ -124,3 +125,38 @@ just add `type: "module"` to `package.json`
   "type": "module"
 }
 ```
+
+2. if there have an error like this:
+```
+[Failed to load PostCSS config: Failed to load PostCSS config (searchPath: /Users/wangwenbo/Documents/wangwenbo/Mine/electron-demo/src): [ReferenceError] module is not defined in ES module scope
+[0] This file is being treated as an ES module because it has a '.js' file extension 
+```
+
+coz `postcss.config.js` file contains `module.exports = {`
+  
+`}` 
+
+like this: 
+
+```js
+module.exports = {
+  plugins: {
+    tailwindcss: {},
+    autoprefixer: {},
+  },
+}
+```
+
+and `package.json` has `type: "module"`
+
+so just replace to 
+
+```js
+export default {
+  plugins: {
+    tailwindcss: {},
+    autoprefixer: {},
+  },
+}
+```
+  
