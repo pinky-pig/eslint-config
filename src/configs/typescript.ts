@@ -40,7 +40,7 @@ export const typescriptCore = tseslint.config({
       'error',
       { allowBitwiseExpressions: true },
     ],
-
+    'import/no-default-export': 'off',
     'no-restricted-syntax': [
       'error',
       ...restrictedSyntaxJs,

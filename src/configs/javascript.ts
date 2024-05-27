@@ -36,6 +36,7 @@ export const javascript: FlatESLintConfigItem[] = [
       eqeqeq: ['error', 'smart'],
       'for-direction': 'error',
       'getter-return': 'error',
+      'import/no-default-export': 'off',
       'no-alert': 'warn',
       'no-async-promise-executor': 'error',
       'no-case-declarations': 'error',
