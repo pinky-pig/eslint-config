@@ -62,6 +62,12 @@ export default arvinn(
     customConfig,
     myConfig,
     {
+      // 全部
+      rules: {
+        'import/no-default-export': 'off',
+      },
+    },
+    {
       files: ["src/**/*.ts"],
       rules: {
         "perfectionist/sort-objects": "error",
