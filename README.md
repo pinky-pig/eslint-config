@@ -30,7 +30,9 @@ export default arvinn();
 {
   "scripts": {
     "lint": "eslint .",
-    "prettier": "prettier --write ."
+    "prettier": "prettier --write .",
+    "lint:fix": "eslint --fix .",
+    "prettier:fix": "prettier --write ."
   },
   "prettier": "@arvinn/prettier-config"
 }
