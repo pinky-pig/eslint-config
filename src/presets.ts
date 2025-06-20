@@ -1,40 +1,69 @@
-import { hasUnocss, hasVue } from './env'
+import {
+  FlatConfigComposer,
+  type Arrayable,
+  type Awaitable,
+} from 'eslint-flat-config-utils'
 import {
   command,
   comments,
+  deMorgan,
   ignores,
   imports,
   javascript,
+  jsdoc,
   jsonc,
   markdown,
   node,
+  pnpm,
   prettier,
-  sortKeys,
+  regexp,
+  sortImports,
   sortPackageJson,
+  sortPnpmWorkspace,
   sortTsconfig,
+  specialCases,
   typescript,
   unicorn,
   unocss,
   vue,
   yml,
 } from './configs'
-import type { FlatESLintConfigItem } from 'eslint-define-config'
+import { hasUnocss, hasVue } from './env'
+import type { ConfigNames } from './typegen'
+import type { Config } from './types'
+import type { Linter } from 'eslint'
 
 /** Ignore common files and include javascript support */
-export const presetJavaScript = [
-  ...ignores,
-  ...javascript,
-  ...comments,
-  ...imports,
-  ...unicorn,
-  ...node,
+export const presetJavaScript = (): Config[] => [
+  ...ignores(),
+  ...javascript(),
+  ...comments(),
+  ...imports(),
+  ...unicorn(),
+  ...node(),
+  ...jsdoc(),
+  ...regexp(),
+  ...deMorgan(),
 ]
 /** Includes basic json(c) file support and sorting json keys */
-export const presetJsonc = [...jsonc, ...sortPackageJson, ...sortTsconfig]
+export const presetJsonc = (): Config[] => [
+  ...jsonc(),
+  ...sortPackageJson(),
+  ...sortTsconfig(),
+  ...sortPnpmWorkspace(),
+]
 /** Includes markdown, yaml + `presetJsonc` support */
-export const presetLangsExtensions = [...markdown, ...yml, ...presetJsonc]
+export const presetLangsExtensions = (): Config[] => [
+  ...markdown(),
+  ...yml(),
+  ...presetJsonc(),
+]
 /** Includes `presetJavaScript` and typescript support */
-export const presetBasic = [...presetJavaScript, ...typescript, ...sortKeys]
+export const presetBasic = (): Config[] => [
+  ...presetJavaScript(),
+  ...typescript(),
+  ...sortImports(),
+]
 /**
  * Includes
  * - `presetBasic` (JS+TS) support
@@ -43,60 +72,71 @@ export const presetBasic = [...presetJavaScript, ...typescript, ...sortKeys]
  * - UnoCSS support (`uno.config.ts` is required)
  * - Prettier support
  */
-export const presetAll = [
-  ...presetBasic,
-  ...presetLangsExtensions,
-  ...vue,
-  ...unocss,
-  ...prettier,
+export const presetAll = async (): Promise<Config[]> => [
+  ...presetBasic(),
+  ...presetLangsExtensions(),
+  ...vue(),
+  ...(await unocss()),
+  ...prettier(),
+  ...command(),
+  ...(await pnpm()),
+  ...specialCases(),
 ]
-export { presetBasic as basic, presetAll as all }
 
-/**
- *
- * @param config
- * @param features
- * @returns
- */
+export interface Options {
+  /** Vue support. Auto-enable if detected. */
+  vue?: boolean
+  /** Prettier support. Default: true */
+  prettier?: boolean
+  /** markdown support. Default: true */
+  markdown?: boolean
+  /** UnoCSS support. Auto-enable if detected. */
+  unocss?: boolean
+  sortKeys?: boolean
+  command?: boolean
+  pnpm?: boolean
+}
+
+/** `@arvinn`'s preset. */
 export function arvinn(
-  config: FlatESLintConfigItem | FlatESLintConfigItem[] = [],
-  {
+  options: Options = {},
+  ...userConfigs: Awaitable<
+    Arrayable<Config> | FlatConfigComposer<any, any> | Linter.Config[]
+  >[]
+): FlatConfigComposer<Config, ConfigNames> {
+  const {
     command: enableCommand = true,
     markdown: enableMarkdown = true,
+    pnpm: enablePnpm = false,
     prettier: enablePrettier = true,
-    unocss: enableUnocss = hasUnocss,
-    vue: enableVue = hasVue,
-  }: Partial<{
-    /** Vue support. Auto-enable. */
-    vue: boolean
-    /** Prettier support. Default: true */
-    prettier: boolean
-    /** markdown support. Default: true */
-    markdown: boolean
-    /** UnoCSS support. Auto-enable. */
-    unocss: boolean
-    sortKeys: boolean
-    command: boolean
-  }> = {},
-): FlatESLintConfigItem[] {
-  const configs = [...presetBasic, ...yml, ...presetJsonc]
+    unocss: enableUnocss = hasUnocss(),
+    vue: enableVue = hasVue(),
+  } = options
+
+  const configs: Awaitable<Config[]>[] = [presetBasic(), yml(), presetJsonc()]
+  if (enablePrettier) {
+    configs.push(prettier())
+  }
   if (enableVue) {
-    configs.push(...vue)
+    configs.push(vue())
   }
   if (enableMarkdown) {
-    configs.push(...markdown)
+    configs.push(markdown())
   }
   if (enableUnocss) {
-    configs.push(...unocss)
-  }
-  if (enablePrettier) {
-    configs.push(...prettier)
+    configs.push(unocss())
   }
   if (enableCommand) {
-    configs.push(...command)
+    configs.push(command())
   }
-  if (Object.keys(config).length > 0) {
-    configs.push(...(Array.isArray(config) ? config : [config]))
+  if (enablePnpm) {
+    configs.push(pnpm())
   }
-  return configs
+  configs.push(specialCases())
+
+  const composer = new FlatConfigComposer<Config, ConfigNames>(
+    ...configs,
+    ...(userConfigs as any),
+  )
+  return composer
 }

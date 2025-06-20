@@ -1,14 +1,15 @@
-import { pluginComments } from '../plugins'
-import type { FlatESLintConfigItem } from 'eslint-define-config'
+import { configComments } from '../plugins'
+import type { Config } from '../types'
 
-export const comments: FlatESLintConfigItem[] = [
+export const comments = (): Config[] => [
   {
-    plugins: {
-      'eslint-comments': pluginComments,
-    },
+    ...configComments.recommended,
+    name: 'arvinn/comments/recommended',
+  },
+  {
+    name: 'arvinn/comments',
     rules: {
-      ...pluginComments.configs.recommended.rules,
-      'eslint-comments/disable-enable-pair': [
+      '@eslint-community/eslint-comments/disable-enable-pair': [
         'error',
         { allowWholeFile: true },
       ],

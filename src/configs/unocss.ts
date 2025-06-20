@@ -1,4 +1,11 @@
-import { pluginUnocss } from '../plugins'
-import type { FlatESLintConfigItem } from 'eslint-define-config'
+import type { Config } from '../types'
 
-export const unocss: FlatESLintConfigItem[] = [pluginUnocss.configs.flat]
+export const unocss = async (): Promise<Config[]> => {
+  const { default: unocss } = await import('@unocss/eslint-plugin')
+  return [
+    {
+      ...(unocss.configs.flat as any as Config),
+      name: 'arvinn/unocss',
+    },
+  ]
+}

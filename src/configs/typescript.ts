@@ -1,20 +1,15 @@
 import { GLOB_JS, GLOB_TS, GLOB_TSX } from '../globs'
 import { tseslint } from '../plugins'
+import type { Rules } from '../typegen'
+import type { Config } from '../types'
 import { restrictedSyntaxJs } from './javascript'
-import type { FlatESLintConfigItem } from 'eslint-define-config'
 
 export const typescriptCore = tseslint.config({
   extends: [...tseslint.configs.recommended],
   files: [GLOB_TS, GLOB_TSX],
-  languageOptions: {
-    parser: tseslint.parser,
-    parserOptions: {
-      sourceType: 'module',
-    },
-  },
+  name: 'arvinn/typescript',
   rules: {
     '@typescript-eslint/ban-ts-comment': 'off',
-    '@typescript-eslint/ban-types': 'off',
     '@typescript-eslint/consistent-type-assertions': [
       'error',
       {
@@ -27,10 +22,20 @@ export const typescriptCore = tseslint.config({
       { disallowTypeAnnotations: false, fixStyle: 'inline-type-imports' },
     ],
     '@typescript-eslint/method-signature-style': ['error', 'property'], // https://www.totaltypescript.com/method-shorthand-syntax-considered-harmful
+    '@typescript-eslint/no-empty-object-type': 'off',
     '@typescript-eslint/no-explicit-any': 'off',
     '@typescript-eslint/no-import-type-side-effects': 'error',
     '@typescript-eslint/no-non-null-assertion': 'off',
     '@typescript-eslint/no-redeclare': 'error',
+    '@typescript-eslint/no-unsafe-function-type': 'off',
+    '@typescript-eslint/no-unused-expressions': [
+      'error',
+      {
+        allowShortCircuit: true,
+        allowTaggedTemplates: true,
+        allowTernary: true,
+      },
+    ],
 
     // handled by unused-imports/no-unused-imports
     '@typescript-eslint/no-unused-vars': 'off',
@@ -40,43 +45,33 @@ export const typescriptCore = tseslint.config({
       'error',
       { allowBitwiseExpressions: true },
     ],
-    'import/no-default-export': 'off',
+
     'no-restricted-syntax': [
       'error',
       ...restrictedSyntaxJs,
       'TSEnumDeclaration[const=true]',
     ],
-  },
-}) as FlatESLintConfigItem[]
+  } satisfies Rules,
+}) as Config[]
 
-export const typescript: FlatESLintConfigItem[] = [
+export const typescript = (): Config[] => [
   ...typescriptCore,
 
   {
     files: ['**/*.d.ts'],
+    name: 'arvinn/typescript/dts-rules',
     rules: {
       'eslint-comments/no-unlimited-disable': 'off',
       'import/no-duplicates': 'off',
+      'no-restricted-syntax': 'off',
       'unused-imports/no-unused-vars': 'off',
     },
   },
   {
-    files: ['**/*.{test,spec}.ts?(x)'],
-    rules: {
-      'no-unused-expressions': 'off',
-    },
-  },
-  {
     files: [GLOB_JS, '**/*.cjs'],
+    name: 'arvinn/typescript/cjs-rules',
     rules: {
       '@typescript-eslint/no-require-imports': 'off',
-      '@typescript-eslint/no-var-requires': 'off',
-    },
-  },
-  {
-    files: ['**/*.d.ts'],
-    rules: {
-      'no-restricted-syntax': ['error', ...restrictedSyntaxJs],
     },
   },
 ]

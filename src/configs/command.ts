@@ -1,4 +1,9 @@
 import { configCommand } from '../plugins'
-import type { FlatESLintConfigItem } from 'eslint-define-config'
+import type { Config } from '../types'
 
-export const command: FlatESLintConfigItem[] = [configCommand()]
+export const command = (): Config[] => [
+  {
+    ...configCommand(),
+    name: 'arvinn/command',
+  },
+]

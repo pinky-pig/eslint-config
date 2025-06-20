@@ -1,18 +1,18 @@
-import { configPrettier, pluginPrettier } from '../plugins'
-import type { FlatESLintConfigItem } from 'eslint-define-config'
+import { pluginPrettier, pluginPrettierRecommended } from '../plugins'
+import type { Config } from '../types'
 
-const prettierConflictRules = { ...configPrettier.rules }
-delete prettierConflictRules['vue/html-self-closing']
+const rules = { ...pluginPrettierRecommended.rules }
+delete rules['vue/html-self-closing']
 
-export const prettier: FlatESLintConfigItem[] = [
+export const prettier = (): Config[] => [
   {
+    name: 'arvinn/prettier',
     plugins: {
       prettier: pluginPrettier,
     },
     rules: {
-      ...prettierConflictRules,
-      ...pluginPrettier.configs.recommended.rules,
-      'prettier/prettier': 'warn',
+      ...rules,
+      'prettier/prettier': 'error',
     },
   },
 ]

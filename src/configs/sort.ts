@@ -1,8 +1,11 @@
-import type { FlatESLintConfigItem } from 'eslint-define-config'
+import { pluginPerfectionist } from '../plugins'
 
-export const sortPackageJson: FlatESLintConfigItem[] = [
+import type { Config } from '../types'
+
+export const sortPackageJson = (): Config[] => [
   {
     files: ['**/package.json'],
+    name: 'arvinn/sort/package.json',
     rules: {
       'jsonc/sort-array-values': [
         'error',
@@ -51,9 +54,11 @@ export const sortPackageJson: FlatESLintConfigItem[] = [
             'devDependencies',
             'engines',
             'config',
-            'overrides',
             'pnpm',
+            'overrides',
+            'resolutions',
             'husky',
+            'simple-git-hooks',
             'lint-staged',
             'eslintConfig',
             'prettier',
@@ -70,16 +75,17 @@ export const sortPackageJson: FlatESLintConfigItem[] = [
         },
         {
           order: { type: 'asc' },
-          pathPattern: '^(?:resolutions|overrides|pnpm.overrides)$',
+          pathPattern: String.raw`^(?:resolutions|overrides|pnpm\.overrides)$`,
         },
       ],
     },
   },
 ]
 
-export const sortTsconfig: FlatESLintConfigItem[] = [
+export const sortTsconfig = (): Config[] => [
   {
     files: ['**/tsconfig.json', '**/tsconfig.*.json'],
+    name: 'arvinn/sort/tsconfig',
     rules: {
       'jsonc/sort-keys': [
         'error',
@@ -169,6 +175,7 @@ export const sortTsconfig: FlatESLintConfigItem[] = [
             'importsNotUsedAsValues',
             'inlineSourceMap',
             'inlineSources',
+            'isolatedDeclarations',
             'mapRoot',
             'newLine',
             'noEmit',
@@ -196,6 +203,90 @@ export const sortTsconfig: FlatESLintConfigItem[] = [
           pathPattern: '^compilerOptions$',
         },
       ],
+    },
+  },
+]
+
+export const sortPnpmWorkspace = (): Config[] => [
+  {
+    files: ['**/pnpm-workspace.yaml'],
+    name: 'arvinn/sort/pnpm-workspace',
+    rules: {
+      'yml/sort-keys': [
+        'error',
+        {
+          order: [
+            'packages',
+            'overrides',
+            'patchedDependencies',
+            'hoistPattern',
+            'defines',
+            'catalog',
+            'catalogs',
+
+            'allowedDeprecatedVersions',
+            'allowNonAppliedPatches',
+            'configDependencies',
+            'ignoredBuiltDependencies',
+            'ignoredOptionalDependencies',
+            'neverBuiltDependencies',
+            'onlyBuiltDependencies',
+            'onlyBuiltDependenciesFile',
+            'packageExtensions',
+            'peerDependencyRules',
+            'supportedArchitectures',
+          ],
+          pathPattern: '^$',
+        },
+        {
+          allowLineSeparatedGroups: true,
+          order: { type: 'asc' },
+          pathPattern: '^catalog$',
+        },
+        {
+          order: { type: 'asc' },
+          pathPattern: `^catalogs$`,
+        },
+        {
+          allowLineSeparatedGroups: true,
+          order: { type: 'asc' },
+          pathPattern: String.raw`^catalogs\..+$`,
+        },
+      ],
+    },
+  },
+]
+
+export const sortImports = (): Config[] => [
+  {
+    name: 'arvinn/sort/imports',
+    plugins: {
+      perfectionist: pluginPerfectionist,
+    },
+    rules: {
+      // 'perfectionist/sort-imports': [
+      //   'warn',
+      //   {
+      //     groups: [
+      //       'builtin',
+      //       'external',
+      //       'internal',
+      //       'internal-type',
+      //       'parent',
+      //       'parent-type',
+      //       'sibling',
+      //       'sibling-type',
+      //       'index',
+      //       'index-type',
+      //       'object',
+      //       'type',
+      //       'side-effect',
+      //       'side-effect-style',
+      //     ],
+      //     internalPattern: ['^[~@#]/.*'],
+      //     newlinesBetween: 'ignore',
+      //   },
+      // ],
     },
   },
 ]

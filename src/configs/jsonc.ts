@@ -1,18 +1,21 @@
-import { parserJsonc, pluginJsonc } from '../plugins'
 import { GLOB_JSON, GLOB_JSON5, GLOB_JSONC } from '../globs'
-import type { FlatESLintConfigItem, Rules } from 'eslint-define-config'
+import { parserJsonc, pluginJsonc } from '../plugins'
+import type { Config } from '../types'
+import type { Linter } from 'eslint'
 
-export const jsonc: FlatESLintConfigItem[] = [
+export const jsonc = (): Config[] => [
   {
     files: [GLOB_JSON, GLOB_JSON5, GLOB_JSONC],
     languageOptions: {
       parser: parserJsonc,
     },
+    name: 'arvinn/json',
     plugins: {
-      jsonc: pluginJsonc,
+      jsonc: pluginJsonc as any,
     },
     rules: {
-      ...(pluginJsonc.configs['recommended-with-jsonc'].rules as Rules),
+      ...(pluginJsonc.configs['recommended-with-jsonc']
+        .rules as Linter.RulesRecord),
       'jsonc/quote-props': 'off',
       'jsonc/quotes': 'off',
     },

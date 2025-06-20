@@ -1,12 +1,12 @@
 import { pluginAntfu, pluginImport } from '../plugins'
-import { GLOB_MARKDOWN, GLOB_SRC, GLOB_SRC_EXT } from '../globs'
-import type { FlatESLintConfigItem } from 'eslint-define-config'
+import type { Config } from '../types'
 
-export const imports: FlatESLintConfigItem[] = [
+export const imports = (): Config[] => [
   {
+    name: 'arvinn/imports',
     plugins: {
       antfu: pluginAntfu,
-      import: pluginImport,
+      import: pluginImport as any,
     },
     rules: {
       'antfu/import-dedupe': 'error',
@@ -17,39 +17,6 @@ export const imports: FlatESLintConfigItem[] = [
       'import/no-named-default': 'error',
       'import/no-self-import': 'error',
       'import/no-webpack-loader-syntax': 'error',
-      'import/order': [
-        'error',
-        {
-          groups: [
-            'builtin',
-            'external',
-            'internal',
-            'parent',
-            'sibling',
-            'index',
-            'object',
-            'type',
-          ],
-          pathGroups: [{ group: 'internal', pattern: '{{@,~}/,#}**' }],
-          pathGroupsExcludedImportTypes: ['type'],
-        },
-      ],
-    },
-  },
-  {
-    files: [
-      `**/*config*.${GLOB_SRC_EXT}`,
-      `**/{views,pages,routes,middleware,plugins,api}/${GLOB_SRC}`,
-      `**/{index,vite,esbuild,rollup,rolldown,webpack,rspack}.ts`,
-      '**/*.d.ts',
-      `${GLOB_MARKDOWN}/**`,
-      '**/.prettierrc*',
-    ],
-    plugins: {
-      import: pluginImport,
-    },
-    rules: {
-      'import/no-default-export': 'off',
     },
   },
 ]

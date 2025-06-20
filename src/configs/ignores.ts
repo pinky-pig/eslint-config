@@ -1,4 +1,14 @@
 import { GLOB_EXCLUDE } from '../globs'
-import type { FlatESLintConfigItem } from 'eslint-define-config'
+import { pluginIgnore } from '../plugins'
+import type { Config } from '../types'
 
-export const ignores: FlatESLintConfigItem[] = [{ ignores: GLOB_EXCLUDE }]
+export const ignores = (): Config[] => [
+  {
+    ignores: GLOB_EXCLUDE,
+    name: 'arvinn/global-ignores',
+  },
+  {
+    ...pluginIgnore({ strict: false }),
+    name: 'arvinn/gitignore',
+  },
+]
