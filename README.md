@@ -161,4 +161,24 @@ pnpm add --save-dev jiti
 
 pnpm publish: 发布
 
+🔧 构建可视化配置页面
+
+这是使用的[eslint/config-inspector](https://github.com/eslint/config-inspector)工具，可以可视化查看 eslint 的配置。
+
+在 package.json 文件的 scripts 中定义相关命令，
+
+```json
+"scripts": {
+  "build:eslint-inspector": "eslint-config-inspector build --config eslint-inspector.config.ts"
+}
+```
+
+然后执行命令：
+
+```bash
+pnpm run build:eslint-inspector
+```
+
+就能在根目录生成一个 `.eslint-config-inspector` 目录下生成一个 SPA（单页面）应用，若有需要，可直接部署到服务器。
+
 🎉 至此，就简简单单创建了一个自己的 ESLint 配置库！

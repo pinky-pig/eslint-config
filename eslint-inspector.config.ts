@@ -1,4 +1,4 @@
-import { arvinn } from './src/index'
+import { arvinn } from './src/index.ts'
 
 export default arvinn({
   vue: true,

@@ -27,6 +27,7 @@
     "dev": "npx @eslint/config-inspector@latest",
     "build": "pnpm run build:typegen && tsdown",
     "build:typegen": "tsx scripts/typegen.ts",
+    "build:eslint-inspector": "eslint-config-inspector build --config eslint-inspector.config.ts",
     "lint": "eslint .",
     "lint:fix": "pnpm run lint --fix",
     "release": "bumpp && pnpm publish",
