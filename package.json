@@ -24,6 +24,7 @@
     "access": "public"
   },
   "scripts": {
+    "up": "taze major -I",
     "setup": "pnpm run build:typegen",
     "dev": "npx @eslint/config-inspector@latest",
     "build": "pnpm run build:typegen && tsdown",
@@ -58,7 +59,7 @@
     "eslint-plugin-prettier": "^5.5.0",
     "eslint-plugin-regexp": "^2.9.0",
     "eslint-plugin-unicorn": "^52.0.0",
-    "eslint-plugin-unused-imports": "^3.2.0",
+    "eslint-plugin-unused-imports": "^4.1.4",
     "eslint-plugin-vue": "^9.33.0",
     "eslint-plugin-yml": "^1.18.0",
     "globals": "^15.15.0",
@@ -66,19 +67,20 @@
     "local-pkg": "^0.5.1",
     "prettier": "^3.5.3",
     "typescript-eslint": "^7.18.0",
-    "vue-eslint-parser": "^9.4.3",
+    "vue-eslint-parser": "^10.1.3",
     "yaml-eslint-parser": "^1.3.0"
   },
   "devDependencies": {
-    "@arvinn/prettier-config": "^0.0.1",
+    "@arvinn/prettier-config": "^0.0.2",
     "@eslint/config-inspector": "^1.1.0",
     "@types/eslint-config-prettier": "^6.11.3",
     "@types/node": "^20.19.1",
     "ansis": "^4.1.0",
-    "bumpp": "^9.11.1",
+    "bumpp": "^10.2.0",
     "configs": "link:@eslint-community/eslint-plugin-eslint-comments/configs",
     "eslint": "^9.29.0",
     "eslint-typegen": "^2.2.0",
+    "taze": "^18.3.0",
     "tsdown": "^0.12.8",
     "tsx": "^4.20.3",
     "typescript": "^5.8.3"
