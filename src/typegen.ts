@@ -555,7 +555,7 @@ export interface Rules {
   '@typescript-eslint/no-unused-expressions'?: Linter.RuleEntry<TypescriptEslintNoUnusedExpressions>
   /**
    * Disallow unused variables
-   * @see https://github.com/sweepline/eslint-plugin-unused-imports/blob/master/docs/rules/no-unused-imports.md
+   * @see https://typescript-eslint.io/rules/no-unused-vars
    */
   '@typescript-eslint/no-unused-vars'?: Linter.RuleEntry<TypescriptEslintNoUnusedVars>
   /**
@@ -4608,19 +4608,9 @@ export interface Rules {
   'unused-imports/no-unused-imports'?: Linter.RuleEntry<UnusedImportsNoUnusedImports>
   /**
    * Disallow unused variables
-   * @see https://github.com/sweepline/eslint-plugin-unused-imports/blob/master/docs/rules/no-unused-imports.md
-   */
-  'unused-imports/no-unused-imports-ts'?: Linter.RuleEntry<UnusedImportsNoUnusedImportsTs>
-  /**
-   * Disallow unused variables
-   * @see https://github.com/sweepline/eslint-plugin-unused-imports/blob/master/docs/rules/no-unused-imports.md
+   * @see https://github.com/sweepline/eslint-plugin-unused-imports/blob/master/docs/rules/no-unused-vars.md
    */
   'unused-imports/no-unused-vars'?: Linter.RuleEntry<UnusedImportsNoUnusedVars>
-  /**
-   * Disallow unused variables
-   * @see https://github.com/sweepline/eslint-plugin-unused-imports/blob/master/docs/rules/no-unused-imports.md
-   */
-  'unused-imports/no-unused-vars-ts'?: Linter.RuleEntry<UnusedImportsNoUnusedVarsTs>
   /**
    * Require calls to `isNaN()` when checking for `NaN`
    * @see https://eslint.org/docs/latest/rules/use-isnan
@@ -10861,30 +10851,8 @@ type UnusedImportsNoUnusedImports = []|[(("all" | "local") | {
   caughtErrorsIgnorePattern?: string
   destructuredArrayIgnorePattern?: string
 })]
-// ----- unused-imports/no-unused-imports-ts -----
-type UnusedImportsNoUnusedImportsTs = []|[(("all" | "local") | {
-  vars?: ("all" | "local")
-  varsIgnorePattern?: string
-  args?: ("all" | "after-used" | "none")
-  ignoreRestSiblings?: boolean
-  argsIgnorePattern?: string
-  caughtErrors?: ("all" | "none")
-  caughtErrorsIgnorePattern?: string
-  destructuredArrayIgnorePattern?: string
-})]
 // ----- unused-imports/no-unused-vars -----
 type UnusedImportsNoUnusedVars = []|[(("all" | "local") | {
-  vars?: ("all" | "local")
-  varsIgnorePattern?: string
-  args?: ("all" | "after-used" | "none")
-  ignoreRestSiblings?: boolean
-  argsIgnorePattern?: string
-  caughtErrors?: ("all" | "none")
-  caughtErrorsIgnorePattern?: string
-  destructuredArrayIgnorePattern?: string
-})]
-// ----- unused-imports/no-unused-vars-ts -----
-type UnusedImportsNoUnusedVarsTs = []|[(("all" | "local") | {
   vars?: ("all" | "local")
   varsIgnorePattern?: string
   args?: ("all" | "after-used" | "none")
