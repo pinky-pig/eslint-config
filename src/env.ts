@@ -12,6 +12,11 @@ export const hasUnocss = (): boolean =>
   isPackageExists('@unocss/webpack') ||
   isPackageExists('@unocss/nuxt') ||
   isPackageExists('@unocss/eslint-plugin')
+export const hasTailwindcss = (): boolean =>
+  isPackageExists('tailwindcss') ||
+  isPackageExists('@tailwindcss/postcss') ||
+  isPackageExists('@tailwindcss/vite') ||
+  isPackageExists('@tailwindcss/cli')
 
 export function isInEditorEnv(): boolean {
   if (process.env.CI) return false

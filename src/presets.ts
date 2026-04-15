@@ -22,13 +22,14 @@ import {
   sortPnpmWorkspace,
   sortTsconfig,
   specialCases,
+  tailwindcss,
   typescript,
   unicorn,
   unocss,
   vue,
   yml,
 } from './configs'
-import { hasUnocss, hasVue } from './env'
+import { hasTailwindcss, hasUnocss, hasVue } from './env'
 import type { ConfigNames } from './typegen'
 import type { Config } from './types'
 import type { Linter } from 'eslint'
@@ -76,6 +77,7 @@ export const presetAll = async (): Promise<Config[]> => [
   ...presetBasic(),
   ...presetLangsExtensions(),
   ...vue(),
+  ...tailwindcss(),
   ...(await unocss()),
   ...prettier(),
   ...command(),
@@ -92,6 +94,8 @@ export interface Options {
   markdown?: boolean
   /** UnoCSS support. Auto-enable if detected. */
   unocss?: boolean
+  /** Tailwind CSS support. Auto-enable if detected. */
+  tailwindcss?: boolean
   sortKeys?: boolean
   command?: boolean
   pnpm?: boolean
@@ -109,6 +113,7 @@ export function arvinn(
     markdown: enableMarkdown = true,
     pnpm: enablePnpm = false,
     prettier: enablePrettier = true,
+    tailwindcss: enableTailwindcss = hasTailwindcss(),
     unocss: enableUnocss = hasUnocss(),
     vue: enableVue = hasVue(),
   } = options
@@ -119,6 +124,9 @@ export function arvinn(
   }
   if (enableVue) {
     configs.push(vue())
+  }
+  if (enableTailwindcss) {
+    configs.push(tailwindcss())
   }
   if (enableMarkdown) {
     configs.push(markdown())
